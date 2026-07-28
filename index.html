@@ -44,7 +44,10 @@
       font-family: "Press Start 2P", monospace;
     }
 
-    .game-menu {
+    /* 각각의 화면 */
+    .screen {
+      display: none;
+
       width: 90%;
       max-width: 700px;
 
@@ -52,12 +55,17 @@
 
       text-align: center;
 
-      background: rgba(0, 0, 0, 0.55);
+      background: rgba(0, 0, 0, 0.6);
       border: 4px solid white;
 
       box-shadow:
         0 0 0 8px black,
         0 0 30px rgba(255, 255, 255, 0.6);
+    }
+
+    /* 현재 표시되는 화면 */
+    .screen.active {
+      display: block;
     }
 
     .game-title {
@@ -81,8 +89,6 @@
     }
 
     .menu-button {
-      display: block;
-
       width: min(100%, 360px);
       padding: 20px 16px;
 
@@ -94,7 +100,6 @@
 
       font-family: "Press Start 2P", monospace;
       font-size: clamp(13px, 2.5vw, 18px);
-      text-decoration: none;
       text-transform: uppercase;
 
       cursor: pointer;
@@ -103,8 +108,8 @@
 
       transition:
         transform 0.12s ease,
-        background-color 0.12s ease,
         color 0.12s ease,
+        background-color 0.12s ease,
         box-shadow 0.12s ease;
     }
 
@@ -121,6 +126,16 @@
       box-shadow: none;
     }
 
+    .building-message {
+      margin: 0 0 50px;
+
+      color: white;
+      font-size: clamp(20px, 5vw, 42px);
+      line-height: 1.8;
+
+      animation: blink 1.4s ease-in-out infinite;
+    }
+
     @keyframes backgroundMove {
       0% {
         background-position: 0% 50%;
@@ -135,8 +150,19 @@
       }
     }
 
+    @keyframes blink {
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.3;
+      }
+    }
+
     @media (max-width: 500px) {
-      .game-menu {
+      .screen {
         padding: 45px 20px;
       }
 
@@ -147,7 +173,8 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      body {
+      body,
+      .building-message {
         animation: none;
       }
 
@@ -159,18 +186,51 @@
 </head>
 
 <body>
-  <main class="game-menu">
+
+  <!-- 메인 타이틀 화면 -->
+  <main id="main-screen" class="screen active">
     <h1 class="game-title">XXXXXXXX</h1>
 
-    <nav class="menu-buttons" aria-label="Game menu">
-      <a class="menu-button" href="building.html">
+    <div class="menu-buttons">
+      <button class="menu-button open-building" type="button">
         Start
-      </a>
+      </button>
 
-      <a class="menu-button" href="building.html">
+      <button class="menu-button open-building" type="button">
         High Scores
-      </a>
-    </nav>
+      </button>
+    </div>
   </main>
+
+  <!-- 제작 중 화면 -->
+  <section id="building-screen" class="screen">
+    <h2 class="building-message">still building...</h2>
+
+    <button id="back-button" class="menu-button" type="button">
+      Back
+    </button>
+  </section>
+
+  <script>
+    const mainScreen = document.getElementById("main-screen");
+    const buildingScreen = document.getElementById("building-screen");
+    const buildingButtons = document.querySelectorAll(".open-building");
+    const backButton = document.getElementById("back-button");
+
+    // Start 또는 High Scores 버튼 클릭
+    buildingButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        mainScreen.classList.remove("active");
+        buildingScreen.classList.add("active");
+      });
+    });
+
+    // Back 버튼 클릭
+    backButton.addEventListener("click", function () {
+      buildingScreen.classList.remove("active");
+      mainScreen.classList.add("active");
+    });
+  </script>
+
 </body>
 </html>
