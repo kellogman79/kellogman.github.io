@@ -4,10 +4,17 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Hello Everyone!</title>
+  <title>XXXXXXXX</title>
+
+  <!-- 게임 스타일 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
-    /* 브라우저의 기본 여백 제거 */
     * {
       box-sizing: border-box;
     }
@@ -17,75 +24,153 @@
       width: 100vw;
       min-height: 100vh;
 
-      /* 글자를 화면 중앙에 배치 */
       display: flex;
       justify-content: center;
       align-items: center;
 
-      /* 흑백 그라데이션 */
+      overflow: hidden;
+
       background: linear-gradient(
         135deg,
         #ffffff,
-        #888888,
+        #b5b5b5,
+        #555555,
         #000000
       );
 
-      /* 배경이 움직일 공간 확보 */
       background-size: 400% 400%;
+      animation: backgroundMove 6s ease-in-out infinite;
 
-      /* 흰색 → 회색 → 검은색 변화 반복 */
-      animation: grayscaleFlash 3s ease-in-out infinite;
-
-      font-family: Arial, sans-serif;
+      font-family: "Press Start 2P", monospace;
     }
 
-    h1 {
-      margin: 0;
-      padding: 20px 30px;
+    .game-menu {
+      width: 90%;
+      max-width: 700px;
 
-      color: white;
-      font-size: clamp(36px, 8vw, 90px);
+      padding: 60px 30px;
+
       text-align: center;
 
-      /* 배경색이 밝을 때도 글자가 보이도록 그림자 추가 */
-      text-shadow:
-        0 0 5px black,
-        0 0 15px black,
-        0 0 30px black;
+      background: rgba(0, 0, 0, 0.55);
+      border: 4px solid white;
+
+      box-shadow:
+        0 0 0 8px black,
+        0 0 30px rgba(255, 255, 255, 0.6);
     }
 
-    @keyframes grayscaleFlash {
+    .game-title {
+      margin: 0 0 65px;
+
+      color: white;
+      font-size: clamp(34px, 7vw, 76px);
+      line-height: 1.4;
+      letter-spacing: 4px;
+
+      text-shadow:
+        5px 5px 0 #555555,
+        10px 10px 0 #000000;
+    }
+
+    .menu-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+    }
+
+    .menu-button {
+      display: block;
+
+      width: min(100%, 360px);
+      padding: 20px 16px;
+
+      color: black;
+      background-color: white;
+
+      border: 4px solid black;
+      outline: 4px solid white;
+
+      font-family: "Press Start 2P", monospace;
+      font-size: clamp(13px, 2.5vw, 18px);
+      text-decoration: none;
+      text-transform: uppercase;
+
+      cursor: pointer;
+
+      box-shadow: 8px 8px 0 black;
+
+      transition:
+        transform 0.12s ease,
+        background-color 0.12s ease,
+        color 0.12s ease,
+        box-shadow 0.12s ease;
+    }
+
+    .menu-button:hover {
+      color: white;
+      background-color: black;
+
+      transform: translate(4px, 4px);
+      box-shadow: 4px 4px 0 white;
+    }
+
+    .menu-button:active {
+      transform: translate(8px, 8px);
+      box-shadow: none;
+    }
+
+    @keyframes backgroundMove {
       0% {
         background-position: 0% 50%;
-        filter: brightness(1.5);
       }
 
       50% {
         background-position: 100% 50%;
-        filter: brightness(0.35);
       }
 
       100% {
         background-position: 0% 50%;
-        filter: brightness(1.5);
       }
     }
 
-    /* 움직임 감소 설정을 사용하는 방문자 보호 */
+    @media (max-width: 500px) {
+      .game-menu {
+        padding: 45px 20px;
+      }
+
+      .game-title {
+        margin-bottom: 50px;
+        letter-spacing: 1px;
+      }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       body {
         animation: none;
-        background: linear-gradient(
-          135deg,
-          #ffffff,
-          #888888,
-          #000000
-        );
+      }
+
+      .menu-button {
+        transition: none;
       }
     }
   </style>
 </head>
 
 <body>
-  <h1>Hello Everyone!</h1>
+  <main class="game-menu">
+    <h1 class="game-title">XXXXXXXX</h1>
+
+    <nav class="menu-buttons" aria-label="Game menu">
+      <a class="menu-button" href="building.html">
+        Start
+      </a>
+
+      <a class="menu-button" href="building.html">
+        High Scores
+      </a>
+    </nav>
+  </main>
 </body>
+</html>
